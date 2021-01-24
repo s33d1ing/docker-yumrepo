@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  web-server:
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - ./run/repo:/var/repo:rw
+    hostname: yum-repo
+    environment:
+      - REPO_PORT=80
+      - REPO_PATH=/var/repo
+      - REPO_DEPTH=2
+
+  centos-7:
+    image: centos:centos7
+    volumes:
+      - ./run/container.repo:/etc/yum.repos.d/container.repo:ro
+    command: yum --disablerepo=* --enablerepo=container -y install hello
+    depends_on:
+      - web-server
+
+  centos-8:
+    image: centos:centos8
+    volumes:
+      - ./run/container.repo:/etc/yum.repos.d/container.repo:ro
+    command: yum --disablerepo=* --enablerepo=container -y install hello
+    depends_on:
+      - web-server
