@@ -10,9 +10,9 @@ REPOSITORY_WATCHER="/usr/local/bin/repository-watcher.sh"
 function create_repo_dir() {
     echo >&3 "$SCRIPT_NAME: Creating ${REPO_PATH}"
 
-    mkdir -p ${REPO_PATH}
-    chmod -R 755 ${REPO_PATH}
-    chown -R nginx:nginx ${REPO_PATH}
+    /bin/mkdir -p ${REPO_PATH}
+    /bin/chmod -R 755 ${REPO_PATH}
+    /bin/chown -R nginx:nginx ${REPO_PATH}
 }
 
 function start_repo_watcher() {

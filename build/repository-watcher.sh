@@ -13,7 +13,7 @@ function create_repo_metadata() {
 function watch_repo_changes() {
     echo >&3 "$SCRIPT_NAME: Watching ${REPO_PATH} for recursively changes"
 
-    inotifywait -m -r -e create -e delete -e delete_self --excludei "(repodata|.*xml)" ${REPO_PATH} |
+    /usr/bin/inotifywait -m -r -e create -e delete -e delete_self --excludei "(repodata|.*xml)" ${REPO_PATH} |
     while read PATH ACTION FILE; do
         echo >&3 "$SCRIPT_NAME: Detected change to ${PATH}${FILE} (action ${ACTION})"
 

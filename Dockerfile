@@ -6,7 +6,7 @@ ENV REPO_PORT=80
 ENV REPO_PATH=/var/repo
 ENV REPO_DEPTH=2
 
-RUN apk add --no-cache --upgrade \
+RUN /sbin/apk add --no-cache --upgrade \
     --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
     --repository http://dl-cdn.alpinelinux.org/alpine/edge/community \
     --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
