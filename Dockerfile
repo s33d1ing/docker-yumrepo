@@ -16,4 +16,8 @@ COPY ./build/90-create-yum-repository.sh /docker-entrypoint.d/90-create-yum-repo
 COPY ./build/default.conf.template /etc/nginx/templates/default.conf.template
 COPY ./build/repository-watcher.sh /usr/local/bin/repository-watcher.sh
 
+RUN /usr/bin/dos2unix /docker-entrypoint.d/90-create-yum-repository.sh
+RUN /usr/bin/dos2unix /etc/nginx/templates/default.conf.template
+RUN /usr/bin/dos2unix /usr/local/bin/repository-watcher.sh
+
 EXPOSE $REPO_PORT
