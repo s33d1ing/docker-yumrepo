@@ -12,9 +12,9 @@ RUN /sbin/apk add --no-cache --upgrade \
     --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
         createrepo_c inotify-tools
 
-COPY ./build/90-create-yum-repository.sh /docker-entrypoint.d/90-create-yum-repository.sh
-COPY ./build/default.conf.template /etc/nginx/templates/default.conf.template
-COPY ./build/repository-watcher.sh /usr/local/bin/repository-watcher.sh
+COPY build/90-create-yum-repository.sh /docker-entrypoint.d/90-create-yum-repository.sh
+COPY build/default.conf.template /etc/nginx/templates/default.conf.template
+COPY build/repository-watcher.sh /usr/local/bin/repository-watcher.sh
 
 RUN /usr/bin/dos2unix /docker-entrypoint.d/90-create-yum-repository.sh
 RUN /usr/bin/dos2unix /etc/nginx/templates/default.conf.template
