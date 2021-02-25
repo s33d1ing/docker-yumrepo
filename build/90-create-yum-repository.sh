@@ -8,7 +8,7 @@ CONTAINER_IP=$(ip addr show eth0 | awk '$1 == "inet" {gsub(/\/.*$/, "", $2); pri
 REPOSITORY_WATCHER="/usr/local/bin/repository-watcher.sh"
 
 function create_repo_dir() {
-    echo >&3 "$SCRIPT_NAME: Creating ${REPO_PATH}"
+    echo >&3 "${SCRIPT_NAME}: Creating ${REPO_PATH}"
 
     /bin/mkdir -p ${REPO_PATH}
     /bin/chmod -R 755 ${REPO_PATH}
@@ -16,9 +16,9 @@ function create_repo_dir() {
 }
 
 function start_repo_watcher() {
-    echo >&3 "$SCRIPT_NAME: Launching $REPOSITORY_WATCHER"
+    echo >&3 "${SCRIPT_NAME}: Launching ${REPOSITORY_WATCHER}"
 
-    /bin/sh $REPOSITORY_WATCHER &
+    /bin/sh ${REPOSITORY_WATCHER} &
 }
 
 create_repo_dir
