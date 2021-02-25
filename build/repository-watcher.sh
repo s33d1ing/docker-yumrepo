@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -e
-
 SCRIPT_NAME=$(basename $0)
 
 function create_repo_metadata() {

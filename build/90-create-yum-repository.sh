@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -e
-
 SCRIPT_NAME=$(basename $0)
 
 CONTAINER_IP=$(ip addr show eth0 | awk '$1 == "inet" {gsub(/\/.*$/, "", $2); print $2}')
