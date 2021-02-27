@@ -22,14 +22,20 @@ function create_repo_metadata() {
 function watch_repo_changes() {
     echo >&3 "${SCRIPT_NAME}: Watching ${REPO_PATH} for recursively changes"
 
-    /usr/bin/inotifywait -m -r -e create -e delete -e delete_self --excludei "(repodata|.*xml)" ${REPO_PATH} |
+    /usr/bin/inotifywait -m -r -e "create,delete,delete_self" --excludei "(repodata|\.xml)" ${REPO_PATH} |
         while true; do
             COUNT=0
+            SLEEP=1
 
-            while read -t 10 PATH ACTION FILE; do
-                echo >&3 "${SCRIPT_NAME}: Detected change to ${PATH}${FILE} (action ${ACTION})"
+            while [ $SLEEP -gt 0 ]; do
+                while read -t 1 PATH ACTION FILE; do
+                    echo >&3 "${SCRIPT_NAME}: Detected change to ${PATH}${FILE} (action ${ACTION})"
 
-                COUNT=$((COUNT+1))
+                    COUNT=$((COUNT+1))
+                    SLEEP=$((SLEEP+1))
+                done
+
+                SLEEP=$((SLEEP-1))
             done
 
             if [ $COUNT -gt 0 ]; then
