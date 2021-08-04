@@ -2,8 +2,15 @@
 
 SCRIPT_NAME=$(basename $0)
 
+NGINX_CONFIG="/etc/nginx/conf.d/default.conf"
+
 function create_repo_metadata() {
     echo >&3 "${SCRIPT_NAME}: Creating repository metadata (maxdepth ${REPO_DEPTH})"
+    echo >&3 "${SCRIPT_NAME}: Beware: This may take a while with a large repository!"
+    echo >&3 "${SCRIPT_NAME}: Notice: NGINX will be unavailable during this process!"
+
+    /bin/sed -i "s/# return 503;/return 503;/g" ${NGINX_CONFIG}
+    /usr/sbin/nginx -s reload
 
     /usr/bin/find ${REPO_PATH} -type d -maxdepth ${REPO_DEPTH} -mindepth ${REPO_DEPTH} |
         while read DIR; do
@@ -17,6 +24,9 @@ function create_repo_metadata() {
 
             /bin/rm -rf ${DIR}/repodata.old.*
         done
+
+    /bin/sed -i "s/return 503;/# return 503;/g" ${NGINX_CONFIG}
+    /usr/sbin/nginx -s reload
 }
 
 function watch_repo_changes() {
