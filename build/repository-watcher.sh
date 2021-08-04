@@ -12,9 +12,11 @@ function create_repo_metadata() {
     /bin/sed -i "s/# return 503;/return 503;/g" ${NGINX_CONFIG}
     /usr/sbin/nginx -s reload
 
-    /usr/bin/find ${REPO_PATH} -type d -maxdepth ${REPO_DEPTH} -mindepth ${REPO_DEPTH} |
+    /usr/bin/find ${REPO_PATH} -maxdepth ${REPO_DEPTH} -mindepth ${REPO_DEPTH} -type d |
         while read DIR; do
-            /usr/bin/createrepo_c ${DIR}
+            echo >&3 "${SCRIPT_NAME}: Running createrepo on ${DIR}"
+
+            /usr/bin/createrepo_c --update ${DIR}
 
             if [ -d "${DIR}/.repodata" ]; then
                 echo >&3 "${SCRIPT_NAME}: Manually renaming ${DIR}/.repodata -> ${DIR}/repodata"
