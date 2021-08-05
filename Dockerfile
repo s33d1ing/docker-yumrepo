@@ -1,4 +1,4 @@
-FROM nginx:1.18.0-alpine
+FROM nginx:1.20.1-alpine
 
 LABEL maintainer="Garrett Dees <garrettdees@gmail.com>"
 
